@@ -1,0 +1,61 @@
+# IF-AutoGen v2.0 設定ファイル
+
+system:
+  drug_id: "drug_B" # 処理対象医薬品ID
+  drug_name: "Entresto" # 医薬品名（プロンプトに使用）
+  mode: "full" # full | index | generate | evaluate | tune
+  if_standard: "2018_2019" # IF記載要領バージョン（固定）
+
+#  drug_id: "drug_A" # 処理対象医薬品ID
+#  drug_name: "Fabihal-Ta 200mg" # 医薬品名（プロンプトに使用）
+#  mode: "full" # full | index | generate | evaluate | tune
+#  if_standard: "2018_2019" # IF記載要領バージョン（固定）
+
+llm:
+  provider: "ollama" # 完全ローカル実行
+  model: "qwen2.5-coder:7b" # 主力モデル (既存品を使用)
+  vision_model: "moondream" # 図解析専用（軽量版）
+  temperature: 0.1
+  max_tokens_per_section: 4096
+  num_ctx: 8192
+  ollama_host: "http://localhost:11434" # ローカルのみ
+
+rag:
+  embedding_model: "intfloat/multilingual-e5-small" # Match hardcoded optimization
+  reranker_model: "cross-encoder/mmarco-mMiniLMv2-L12-H384"
+  chunk_size_parent: 1024
+  chunk_size_child: 256
+  top_k_retrieve: 10
+  top_k_rerank: 5
+  bm25_weight: 0.4
+  dense_weight: 0.6
+  cross_modal:
+    max_linked_tables: 2 # Tables
+    max_linked_figures: 1 # Figures
+    enable_vision_llm: true # Vision-LLM
+
+tuning:
+  max_loops: 2 # Initial tuning verification
+  target_score: 0.90
+  target_metric: "composite"
+  early_stop_patience: 2 # N回連続改善なし→早期終了
+  enable_prompt_tuning: true
+  enable_rag_tuning: true
+  enable_crossref_tuning: true
+
+evaluation:
+  weights:
+    text_similarity: 0.10
+    semantic_similarity: 0.15
+    numerical_accuracy: 0.25
+    table_reproduction: 0.15
+    figure_ref_match: 0.10
+    section_coverage: 0.10
+    term_coverage: 0.05
+    citation_match: 0.05
+    cover_completeness: 0.05
+
+monitoring:
+  mlflow_uri: "./mlruns"
+  dashboard_port: 8501
+  log_level: "INFO"

@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.lib/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Data & Models (Sensitive/Large)
+# CTD documents and extracted data should not be committed
+data/raw/
+data/processed/
+data/vectordb/
+models/
+
+# Experiments & Outputs
+mlruns/
+mlflow.db
+outputs/
+*.log
+OUT_VII.txt
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary
+/tmp/
+.ipynb_checkpoints
+.pytest_cache/
