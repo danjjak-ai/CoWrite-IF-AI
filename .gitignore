@@ -46,3 +46,9 @@ OUT_VII.txt
 /tmp/
 .ipynb_checkpoints
 .pytest_cache/
+
+# Project Documentation/Plans (Untracked)
+01_Research_v2.md
+02_Architecture_v2.md
+03a_Implementation_Plan_v2_Step1to5.md
+03b_Implementation_Plan_v2_Step6to8.md
